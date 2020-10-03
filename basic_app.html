@@ -6,16 +6,19 @@
     function showInput() {
 		var message = document.getElementById("message").value;
             display_message.innerHTML= message;
-    
-			 let api = "https://api.openweathermap.org/data/2.5/weather";
-			 let apiKey = "f146799a557e8ab658304c1b30cc3cfd";
+			}
+    function fetchdata(){
+			 let api = "http://api.openweathermap.org/data/2.5/weather?q=London";
+			 let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
+			 
+			 let temperature = document.getElementById("temperature");
+			 let description = document.getElementById("description");
 			 
 		let url =
         api +
-        "?q=" +
-        display_message+
-	    "&appid="
-        apiKey +
+        //display_message+
+	    "&appid="+
+        apiKey 
         ;
 
 	  fetch(url)
@@ -63,8 +66,8 @@ position: fixed;
 <h1> Weather App</h1>
   <input type="text" placeholder="Enter Location" id="message">
   
-   <input type="button" class="button" onclick="showInput()" value="Submit"><br/>
-   <p> <span id = "display_message"  id="description" ></span> </p>
+   <input type="button" class="button" onclick="showInput();fetchdata()" value="Save"><br>
+   <p> <span id = "display_message" id="description" id="location" ></span> </p>
    
 </form>
 
