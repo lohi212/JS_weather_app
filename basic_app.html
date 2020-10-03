@@ -6,13 +6,13 @@
     function showInput() {
 		var message = document.getElementById("message").value;
             display_message.innerHTML= message;
-			}
-    function fetchdata(){
+		
 			 let api = "http://api.openweathermap.org/data/2.5/weather?q=London";
 			 let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
 			 
-			 let temperature = document.getElementById("temperature");
-			 let description = document.getElementById("description");
+			let temperature = document.getElementById("temp-data");
+			 let description = document.getElementById("desc-data");
+			 
 			 
 		let url =
         api +
@@ -20,15 +20,13 @@
 	    "&appid="+
         apiKey 
         ;
-
+console.log(url);
 	  fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         let temp = data.main.temp;
         temperature.innerHTML = temp + "° F";
-        /*location.innerHTML =
-          data.name + " (" + latitude + "°, " + longitude + "°)";*/
         description.innerHTML = data.weather[0].main;
 		
 		
@@ -66,8 +64,10 @@ position: fixed;
 <h1> Weather App</h1>
   <input type="text" placeholder="Enter Location" id="message">
   
-   <input type="button" class="button" onclick="showInput();fetchdata()" value="Save"><br>
-   <p> <span id = "display_message" id="description" id="location" ></span> </p>
+   <input type="button" class="button" onclick="showInput()" value="Save"><br>
+   <h1 id="display_message"></h1>
+    <h2 id="desc-data"></h2>
+    <p id="temp-data"></p>
    
 </form>
 
