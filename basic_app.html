@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <script language="JavaScript">
+    function showInput() {
+		var message = document.getElementById("message").value;
+            display_message.innerHTML= message;
+    
+			 let api = "https://api.openweathermap.org/data/2.5/weather";
+			 let apiKey = "f146799a557e8ab658304c1b30cc3cfd";
+			 
+		let url =
+        api +
+        "?q=" +
+        display_message+
+	    "&appid="
+        apiKey +
+        ;
+
+	  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        let temp = data.main.temp;
+        temperature.innerHTML = temp + "° F";
+        /*location.innerHTML =
+          data.name + " (" + latitude + "°, " + longitude + "°)";*/
+        description.innerHTML = data.weather[0].main;
+		
+		
+      });	
+    }
+	
+  </script>
+
+  </head>
+<body>
+<style>
+h1{
+text-align: center;
+}
+form{
+position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -180px;
+  width: 400px;
+  height: 500px;
+  padding: 10px;
+  border: 2px solid black;
+  
+  }
+  .button{
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #1E90FF;
+  }
+  </style>
+
+<form>
+<h1> Weather App</h1>
+  <input type="text" placeholder="Enter Location" id="message">
+  
+   <input type="button" class="button" onclick="showInput()" value="Submit"><br/>
+   <p> <span id = "display_message"  id="description" ></span> </p>
+   
+</form>
+
+</body>
+</html>
