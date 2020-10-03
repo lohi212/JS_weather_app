@@ -2,24 +2,20 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <script language="JavaScript">
+  <script ></script>
+  <script language="JavaScript" >
     function showInput() {
 		var message = document.getElementById("message").value;
             display_message.innerHTML= message;
 		
-			 let api = "http://api.openweathermap.org/data/2.5/weather?q=London";
+			 let api = "http://api.openweathermap.org/data/2.5/weather?q=";
 			 let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
 			 
 			let temperature = document.getElementById("temp-data");
 			 let description = document.getElementById("desc-data");
 			 
 			 
-		let url =
-        api +
-        //display_message+
-	    "&appid="+
-        apiKey 
-        ;
+		let url = `${api}${message}&appid=${apiKey}`;
 console.log(url);
 	  fetch(url)
       .then(response => response.json())
@@ -34,42 +30,61 @@ console.log(url);
     }
 	
   </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 <body>
 <style>
 h1{
 text-align: center;
 }
-form{
-position: fixed;
-  top: 25%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: -180px;
-  width: 400px;
-  height: 500px;
-  padding: 10px;
-  border: 2px solid black;
-  
-  }
+.form {
+			position: fixed;
+			top: 25%;
+			left: 50%;
+			margin-top: -100px;
+			margin-left: -180px;
+            width: 330px; 
+            height: 500px; 
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+            
+            border: 2px solid black;
+			border-radius: 5px;
+            padding:20px;
+        }
+
+
   .button{
   border: 1px solid black;
   border-radius: 5px;
   background-color: #1E90FF;
   }
+  .card {
+    width: 140px;
+	background-color:RoyalBlue;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.icon {
+    background: url('your-image-url.jpg');
+    height: 20px;
+    width: 20px;
+    <!--display: block-->;
+   
+}
   </style>
 
-<form>
+<div class="form">
+
 <h1> Weather App</h1>
-  <input type="text" placeholder="Enter Location" id="message">
-  
-   <input type="button" class="button" onclick="showInput()" value="Save"><br>
-   <h1 id="display_message"></h1>
-    <h2 id="desc-data"></h2>
-    <p id="temp-data"></p>
+
+  <input type="text" placeholder="Enter a place name" size=27 id="message">
+   <input type="button" class="button" onclick="showInput()" value="Search"><br>
+   <h2 text-align="center" id="display_message"></h2>
+   <div class="card">
+	<h3 id="desc-data"></h3>
+    <h4 id="temp-data"></h4></div>
    
-</form>
+</div>
 
 </body>
 </html>
