@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <script language="JavaScript">
+    function showInput() {
+        var message = document.getElementById("message").value;
+            display_message.innerHTML= message;
+    }
+  </script>
+
+  </head>
+<body>
+<style>
+h1{
+text-align: center;
+}
+form{
+position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -180px;
+  width: 400px;
+  height: 500px;
+  padding: 10px;
+  border: 2px solid black;
+  
+  }
+  .button{
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #1E90FF;
+  }
+  </style>
+
+<form>
+<h1> Weather App</h1>
+  <input type="text" placeholder="Enter Location" id="message">
+  
+   <input type="button" class="button" onclick="showInput()" value="Submit"><br/>
+   <p> <span id = "display_message"></span> </p>
+</form>
+
+</body>
+</html>
