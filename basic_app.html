@@ -79,7 +79,7 @@ console.log(url);
       .then(data => {
         //console.log(data);
     //ate.innerHTML = data.list[0].dt;
-console.log("count:",count);
+//console.log("count:",count);
      
       /*
 	  const date = new Date()
@@ -95,13 +95,14 @@ console.log("count:",count);
         //console.log(data.list[i].temp.day);
         const tempHTML = document.createElement('p');
         const descHTML = document.createElement('p');
-		const dateHTML = document.createElement('p');
-		
+		//const dateHTML = document.createElement('p');
         tempHTML.innerHTML = data.list[i].temp.day+ "° F";
         descHTML.innerHTML = data.list[i].weather[0].main;
-		dateHTML.innerHTML = new Date(data.list[i].dt);
-		console.log(dateHTML.getMonth());
-		card.append(dateHTML);
+		const date=new Date(data.list[i].dt*1000);
+		let ddmmyyyy=`${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+		console.log(ddmmyyyy);
+		card.append(ddmmyyyy);
+		//card.append(dateHTML);
         card.append(tempHTML);
         card.append(descHTML);
         card.style.margin = "2px";
