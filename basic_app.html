@@ -2,89 +2,117 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <script ></script>
-  <script language="JavaScript" >
-    function showInput() {
-		var message = document.getElementById("message").value;
-            display_message.innerHTML= message;
-		
-			 let api = "http://api.openweathermap.org/data/2.5/weather?q=";
-			 let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
-			 
-			let temperature = document.getElementById("temp-data");
-			 let description = document.getElementById("desc-data");
-			 
-			 
-		let url = `${api}${message}&appid=${apiKey}`;
-console.log(url);
-	  fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        //console.log(data);
-        let temp = data.main.temp;
-        temperature.innerHTML = temp + "° F";
-        description.innerHTML = data.weather[0].main;
-		
-		
-      });	
-    }
-	
-  </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-<body>
-<style>
+  <style>
 h1{
 text-align: center;
 }
 .form {
-			position: fixed;
-			top: 25%;
-			left: 50%;
-			margin-top: -100px;
-			margin-left: -180px;
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -180px;
             width: 330px; 
             height: 500px; 
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
             
             border: 2px solid black;
-			border-radius: 5px;
+            border-radius: 5px;
             padding:20px;
+			overflow:auto;
         }
-
 
   .button{
   border: 1px solid black;
   border-radius: 5px;
   background-color: #1E90FF;
   }
-  .card {
-    width: 140px;
-	background-color:RoyalBlue;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
+  
 .icon {
     background: url('your-image-url.jpg');
     height: 20px;
     width: 20px;
-    <!--display: block-->;
+   
    
 }
   </style>
+
+  </head>
+<body>
 
 <div class="form">
 
 <h1> Weather App</h1>
 
-  <input type="text" placeholder="Enter a place name" size=27 id="message">
-   <input type="button" class="button" onclick="showInput()" value="Search"><br>
-   <h2 text-align="center" id="display_message"></h2>
-   <div class="card">
-	<h3 id="desc-data"></h3>
-    <h4 id="temp-data"></h4></div>
+  <input type="text" placeholder="Enter a place name" size=27 id="message"><br>
+  <input type="number" placeholder="Historic Data" min="1" max="16" id="cnt_of_days"><br>
+   <input type="button" class="button" onclick="showInput(cnt_of_days)" value="Search"><br>
+   <h2 text-align="center" id="display_message"><br></h2>
+   <div id="container" class="container" style="display: flex; flex-wrap: wrap; justify-content:space-between";>
+   
+  </div>
+    
    
 </div>
+<script language="JavaScript" >
+  
+    function showInput(cnt_of_days){
+         const container = document.querySelector("#container");
+        container.innerHTML = "";
+        
+        var message = document.getElementById("message").value;
+        const display_message = document.getElementById('display_message');
+        
+            display_message.innerHTML= message;
+        let count = document.getElementById("cnt_of_days").value;
+             let api = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
+             let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
+            //http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=4&appid=f52da8a9a4cf3bf1e5a9154803d30423
+            // let temperature = document.getElementById("temp-data");
+             // let description = document.getElementById("desc-data");
+             
+             
+        let url = `${api}${message}&cnt=${count}&appid=${apiKey}`;
+console.log(url);
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data);
+    //ate.innerHTML = data.list[0].dt;
+console.log("count:",count);
+     
+      /*
+	  const date = new Date()
+	  date.getMonth()
+	  date.getDay()
+	  date.getYear()
+*/
+    for(let i = 0; i <count; i++) {
+        const card = document.createElement('div');
+        card.style.width = "100px";
+        card.style.height = "100px";
+        card.style.border = "1px solid #000";
+        //console.log(data.list[i].temp.day);
+        const tempHTML = document.createElement('p');
+        const descHTML = document.createElement('p');
+		const dateHTML = document.createElement('p');
+		
+        tempHTML.innerHTML = data.list[i].temp.day+ "° F";
+        descHTML.innerHTML = data.list[i].weather[0].main;
+		dateHTML.innerHTML = new Date(data.list[i].dt);
+		console.log(dateHTML.getMonth());
+		card.append(dateHTML);
+        card.append(tempHTML);
+        card.append(descHTML);
+        card.style.margin = "2px";
+        card.style.marginTop = "20px";
+        container.append(card);     
+    }
+               
+      });   
+    }
+  
+  </script>
 
 </body>
 </html>
