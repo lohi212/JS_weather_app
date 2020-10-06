@@ -19,9 +19,15 @@ text-align: center;
             border: 2px solid black;
             border-radius: 5px;
             padding:20px;
-			overflow:auto;
+			overflow-y: scroll;
         }
-
+.form::-webkit-scrollbar {
+    display: none;
+}
+.form {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
   .button{
   border: 1px solid black;
   border-radius: 5px;
@@ -45,18 +51,47 @@ text-align: center;
 <h1> Weather App</h1>
 
   <input type="text" placeholder="Enter a place name" size=27 id="message"><br>
-  <input type="number" placeholder="Historic Data" min="1" max="16" id="cnt_of_days"><br>
-   <input type="button" class="button" onclick="showInput(cnt_of_days)" value="Search"><br>
+  <!--<input type="number" placeholder="Historic Data" id="cnt_of_days"><br>-->
+  <div id="cnt_of_days"></div>
+   <input type="button" class="button" onclick="showInput()" value="Search"><br>
    <h2 text-align="center" id="display_message"><br></h2>
-   <div id="container" class="container" style="display: flex; flex-wrap: wrap; justify-content:space-between";>
+   <div id="container" class="container" style=" text-align:center; display: flex; flex-wrap: wrap; justify-content:space-between";>
    
   </div>
     
    
 </div>
 <script language="JavaScript" >
+ 
+                let count;
+				const dropdown = document.createElement('select');
+                for (let i = 0; i < 16; i++) {
+                    const option = document.createElement('option');
+                    option.id = i + 1;
+                    option.text = i + 1;
+                    option.value = i + 1;
+					//dropdown.options.add(option);
+                    dropdown.append(option);
+                }
+                dropdown.addEventListener('change', (event) => {
+                    console.log(event.target.value);
+					count=event.target.value;
+                })
+
+                document.querySelector('#cnt_of_days').append(dropdown);
+
+            
+    function colormapping(weather){
+	var map = new Map([["Clouds" ,"#b3ccff"], ["Clear", "#ff9933"], ["Rain", "#6699ff"]]); let clr;
+	if(map.has(weather))
+	clr=map.get(weather);
+	//console.log("color:",clr);
+	return clr;
+	}
+	
   
-    function showInput(cnt_of_days){
+    function showInput(){
+	console.log("cnt: ",cnt_of_days);
          const container = document.querySelector("#container");
         container.innerHTML = "";
         
@@ -64,7 +99,7 @@ text-align: center;
         const display_message = document.getElementById('display_message');
         
             display_message.innerHTML= message;
-        let count = document.getElementById("cnt_of_days").value;
+            // count = document.getElementById("cnt_of_days").value;
              let api = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
              let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
             //http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=4&appid=f52da8a9a4cf3bf1e5a9154803d30423
@@ -79,7 +114,7 @@ console.log(url);
       .then(data => {
         //console.log(data);
     //ate.innerHTML = data.list[0].dt;
-//console.log("count:",count);
+console.log("count:",count);
      
       /*
 	  const date = new Date()
@@ -91,18 +126,16 @@ console.log(url);
         const card = document.createElement('div');
         card.style.width = "100px";
         card.style.height = "100px";
-        card.style.border = "1px solid #000";
-        //console.log(data.list[i].temp.day);
+      //card.style.border = "1px solid #000";
+		card.style.backgroundColor = colormapping(data.list[i].weather[0].main);
+   
         const tempHTML = document.createElement('p');
         const descHTML = document.createElement('p');
-		//const dateHTML = document.createElement('p');
         tempHTML.innerHTML = data.list[i].temp.day+ "° F";
         descHTML.innerHTML = data.list[i].weather[0].main;
 		const date=new Date(data.list[i].dt*1000);
 		let ddmmyyyy=`${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
-		console.log(ddmmyyyy);
 		card.append(ddmmyyyy);
-		//card.append(dateHTML);
         card.append(tempHTML);
         card.append(descHTML);
         card.style.margin = "2px";
