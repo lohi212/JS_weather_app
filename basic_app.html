@@ -6,13 +6,14 @@
 h1{
 text-align: center;
 }
+input { margin-bottom: 10px; }
 .form {
             position: fixed;
             top: 25%;
             left: 50%;
             margin-top: -100px;
             margin-left: -180px;
-            width: 330px; 
+            width: 380px; 
             height: 500px; 
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
             
@@ -33,7 +34,11 @@ text-align: center;
   border-radius: 5px;
   background-color: #1E90FF;
   }
-  
+   #map {
+        height: 100%;
+		width: 98%;
+      }
+
 .icon {
     background: url('your-image-url.jpg');
     height: 20px;
@@ -42,25 +47,30 @@ text-align: center;
    
 }
   </style>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 <body>
 
 <div class="form">
 
 <h1> Weather App</h1>
-
-  <input type="text" placeholder="Enter a place name" size=27 id="message"><br>
+  Location : <input type="text" placeholder="Enter a place name" size=27 id="message"><br>  
   <!--<input type="number" placeholder="Historic Data" id="cnt_of_days"><br>-->
-  <div id="cnt_of_days"></div>
-   <input type="button" class="button" onclick="showInput()" value="Search"><br>
+  Upcoming Forecast :<div id="cnt_of_days"></div>
+   <input type="button" id="myButton" class="button" onclick="showInput()" value="Search"><br>
    <h2 text-align="center" id="display_message"><br></h2>
+   <div id="map"></div>
    <div id="container" class="container" style=" text-align:center; display: flex; flex-wrap: wrap; justify-content:space-between";>
    
   </div>
     
    
 </div>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEEQo6D88xY8rNolYHyeqmnwp3GGokCXA&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
 <script language="JavaScript" >
  
                 let count;
@@ -80,8 +90,15 @@ text-align: center;
 
                 document.querySelector('#cnt_of_days').append(dropdown);
 
-            
-    function colormapping(weather){
+    let map;
+	function initMap(lati,longi) {
+	map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: lati, lng: longi },
+    zoom: 8,
+  });
+}       
+    
+	function colormapping(weather){
 	var map = new Map([["Clouds" ,"#b3ccff"], ["Clear", "#ff9933"], ["Rain", "#6699ff"]]); let clr;
 	if(map.has(weather))
 	clr=map.get(weather);
@@ -99,12 +116,10 @@ text-align: center;
         const display_message = document.getElementById('display_message');
         
             display_message.innerHTML= message;
-            // count = document.getElementById("cnt_of_days").value;
              let api = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
              let apiKey = "f52da8a9a4cf3bf1e5a9154803d30423";
             //http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=4&appid=f52da8a9a4cf3bf1e5a9154803d30423
-            // let temperature = document.getElementById("temp-data");
-             // let description = document.getElementById("desc-data");
+         
              
              
         let url = `${api}${message}&cnt=${count}&appid=${apiKey}`;
@@ -115,20 +130,21 @@ console.log(url);
         //console.log(data);
     //ate.innerHTML = data.list[0].dt;
 console.log("count:",count);
-     
-      /*
-	  const date = new Date()
-	  date.getMonth()
-	  date.getDay()
-	  date.getYear()
-*/
+     let btn = document.getElementById('display_message');
+	const lati=data.city.coord.lat;
+	const longi=data.city.coord.lon;
+	initMap(lati,longi);
+             btn.innerHTML = message+" "+'<a href="https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat='+lati+'&lon='+longi+'&zoom=10"  target="_blank"><i class="fa fa-map-marker"></i></a>';
+      
+	
+	 
     for(let i = 0; i <count; i++) {
         const card = document.createElement('div');
         card.style.width = "100px";
         card.style.height = "100px";
       //card.style.border = "1px solid #000";
 		card.style.backgroundColor = colormapping(data.list[i].weather[0].main);
-   
+		//card.style.boxShadow = 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         const tempHTML = document.createElement('p');
         const descHTML = document.createElement('p');
         tempHTML.innerHTML = data.list[i].temp.day+ "° F";
