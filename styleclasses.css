@@ -1,0 +1,80 @@
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+
+h1{
+text-align: center;
+}
+dropdownstyle{
+	min-height: 37px;
+    min-width: 60px;
+    border: 2px solid #ccc;
+}
+input[type=text] {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+}
+
+input:focus {
+outline:none;
+border:none;
+}
+
+.button{
+  background-color: #1E90FF;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+  
+  }
+.button:hover {
+  opacity: 0.8;
+  }
+  
+button:focus {
+outline:none;
+border:none;
+}
+
+.containr {
+  padding: 176px;height: 500px;
+}
+
+   #map {
+        display:none;
+        height: 80%;
+        width: 78%;
+      }
+
+.icon {
+    background: url('your-image-url.jpg');
+    height: 20px;
+    width: 20px;
+  
+   
+}
+.user-input {
+   display:flex;
+   align-items: center;
+   justify-content: space-evenly;
+}
+.card-container {
+	width: 150px;
+    height: 150px;
+    background-color: rgb(102, 153, 255);
+    margin: 20px 2px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+p{
+margin:0;
+}

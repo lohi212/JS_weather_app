@@ -2,86 +2,11 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-
-
-h1{
-text-align: center;
-}
-
-input[type=text] {
-  width: 40%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 2px solid #ccc;
-  box-sizing: border-box;
-}
-
-input:focus {
-outline:none;
-border:none;
-}
-
-.button{
-  background-color: #1E90FF;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 10%;
-  
-  }
-.button:hover {
-  opacity: 0.8;
-  }
-  
-button:focus {
-outline:none;
-border:none;
-}
-
-.containr {
-  padding: 176px;height: 500px;
-}
-
-   #map {
-        display:none;
-        height: 80%;
-        width: 78%;
-      }
-
-.icon {
-    background: url('your-image-url.jpg');
-    height: 20px;
-    width: 20px;
-  
-   
-}
-.user-input {
-   display:flex;
-   align-items: center;
-   justify-content: space-evenly;
-}
-.card-container {
-	width: 150px;
-    height: 150px;
-    background-color: rgb(102, 153, 255);
-    margin: 20px 2px 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-p{
-margin:0;
-}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styleclasses.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  </head>
+</head>
   
 <body>
 <h1> Weather App</h1>
@@ -90,7 +15,8 @@ margin:0;
  <div class="user-input">
   Location : <input type="text" placeholder="Enter a place name" size=27 id="message">
  
-  Upcoming Forecast:<div id="cnt_of_days"></div>
+  Upcoming Forecast:<div id="cnt_of_days" class="dropdownstyle">
+	</div>
    <input type="button" id="myButton" class="button" onclick="showInput()" value="Search">
    </div>
    <h2 text-align="center" id="display_message"><br></h2>
