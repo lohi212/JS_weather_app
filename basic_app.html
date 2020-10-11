@@ -3,64 +3,99 @@
 <head lang="en">
   <meta charset="UTF-8">
   <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+
 h1{
 text-align: center;
 }
-input { margin-bottom: 10px; }
-.form {
-            position: fixed;
-            top: 25%;
-            left: 50%;
-            margin-top: -100px;
-            margin-left: -180px;
-            width: 380px; 
-            height: 500px; 
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-            
-            border: 2px solid black;
-            border-radius: 5px;
-            padding:20px;
-			overflow-y: scroll;
-        }
-.form::-webkit-scrollbar {
-    display: none;
+
+input[type=text] {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
 }
-.form {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
+
+input:focus {
+outline:none;
+border:none;
 }
-  .button{
-  border: 1px solid black;
-  border-radius: 5px;
+
+.button{
   background-color: #1E90FF;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+  
   }
+.button:hover {
+  opacity: 0.8;
+  }
+  
+button:focus {
+outline:none;
+border:none;
+}
+
+.containr {
+  padding: 176px;height: 500px;
+}
+
    #map {
-        height: 100%;
-		width: 98%;
+        display:none;
+        height: 80%;
+        width: 78%;
       }
 
 .icon {
     background: url('your-image-url.jpg');
     height: 20px;
     width: 20px;
+  
    
-   
+}
+.user-input {
+   display:flex;
+   align-items: center;
+   justify-content: space-evenly;
+}
+.card-container {
+	width: 150px;
+    height: 150px;
+    background-color: rgb(102, 153, 255);
+    margin: 20px 2px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+p{
+margin:0;
 }
   </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
+  
 <body>
-
-<div class="form">
-
 <h1> Weather App</h1>
-  Location : <input type="text" placeholder="Enter a place name" size=27 id="message"><br>  
-  <!--<input type="number" placeholder="Historic Data" id="cnt_of_days"><br>-->
-  Upcoming Forecast :<div id="cnt_of_days"></div>
-   <input type="button" id="myButton" class="button" onclick="showInput()" value="Search"><br>
+<div class="containr">
+
+ <div class="user-input">
+  Location : <input type="text" placeholder="Enter a place name" size=27 id="message">
+ 
+  Upcoming Forecast:<div id="cnt_of_days"></div>
+   <input type="button" id="myButton" class="button" onclick="showInput()" value="Search">
+   </div>
    <h2 text-align="center" id="display_message"><br></h2>
    <div id="map"></div>
-   <div id="container" class="container" style=" text-align:center; display: flex; flex-wrap: wrap; justify-content:space-between";>
+  <div id="container" class="container" style=" text-align:center; display: flex; flex-wrap: wrap; justify-content:space-between";>
    
   </div>
     
@@ -93,6 +128,7 @@ input { margin-bottom: 10px; }
     let map;
 	function initMap(lati,longi) {
 	map = new google.maps.Map(document.getElementById("map"), {
+	//console.log("lati",lati);console.log("longi",longi);
     center: { lat: lati, lng: longi },
     zoom: 8,
   });
@@ -129,10 +165,12 @@ console.log(url);
       .then(data => {
         //console.log(data);
     //ate.innerHTML = data.list[0].dt;
-console.log("count:",count);
+
      let btn = document.getElementById('display_message');
 	const lati=data.city.coord.lat;
+	//console.log("lati:",lati);
 	const longi=data.city.coord.lon;
+	document.getElementById('map').style.display = 'block';
 	initMap(lati,longi);
              btn.innerHTML = message+" "+'<a href="https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat='+lati+'&lon='+longi+'&zoom=10"  target="_blank"><i class="fa fa-map-marker"></i></a>';
       
@@ -140,8 +178,7 @@ console.log("count:",count);
 	 
     for(let i = 0; i <count; i++) {
         const card = document.createElement('div');
-        card.style.width = "100px";
-        card.style.height = "100px";
+        
       //card.style.border = "1px solid #000";
 		card.style.backgroundColor = colormapping(data.list[i].weather[0].main);
 		//card.style.boxShadow = 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -156,6 +193,7 @@ console.log("count:",count);
         card.append(descHTML);
         card.style.margin = "2px";
         card.style.marginTop = "20px";
+		card.classList.add('card-container');
         container.append(card);     
     }
                
