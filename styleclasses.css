@@ -5,10 +5,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 h1{
 text-align: center;
 }
-dropdownstyle{
+.dropdownstyle{
 	min-height: 37px;
     min-width: 60px;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
 }
 input[type=text] {
   width: 40%;
